@@ -2,9 +2,7 @@
   <div class="home mdc-typography">
     <mdc-layout-grid class="home__search-container"
       :style="{backgroundImage: `url(${require('../../assets/HowThisBook/book-863418_1920.jpg')})`}">
-      <mdc-layout-cell tablet=1 desktop=2 class="home__search-container__phone-hidden">
-        <!-- mdc-layout-cell 佔格子製造假 padding 讓中間能置中用 -->
-      </mdc-layout-cell>
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
 
       <mdc-layout-cell phone=4 tablet=6 desktop=8 class="home__search-container__search-component">
         <div class="home__search-container__search-component__container">
@@ -21,21 +19,17 @@
         </div>
       </mdc-layout-cell>
 
-      <mdc-layout-cell tablet=1 desktop=2 class="home__mdc-layout-grid__phone-hidden">
-        <!-- mdc-layout-cell 佔格子製造假 padding 讓中間能置中用 -->
-      </mdc-layout-cell>
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
     </mdc-layout-grid>
 
     <mdc-layout-grid class="home__book-container">
-      <mdc-layout-cell tablet=1 desktop=2 class="home__book-container__phone-hidden">
-        <!-- mdc-layout-cell 佔格子製造假 padding 讓中間能置中用 -->
-      </mdc-layout-cell>
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
 
       <mdc-layout-cell phone=4 tablet=6 desktop=8 class="home__book-container__messages-component">
         <mdc-headline>熱門書籍</mdc-headline>
         <div v-show="currentTab === 'experience'">
           <!-- v-for books -->
-          <div v-for="book in books" :key="book.id">
+          <router-link :to="{ name: 'Book', params: { ISBN: book.ISBN }}" tag="div" v-for="book in books" :key="book.id">
             <mdc-card class="home__book-container__messages-component__card">
               <mdc-card-primary-action>
                 <mdc-card-text>
@@ -79,7 +73,8 @@
                 </mdc-card-actions>
               </mdc-card-primary-action>
             </mdc-card>
-          </div>
+          </router-link>
+          <!-- </div> -->
           <!-- end v-for books -->
         </div>
 
@@ -142,16 +137,12 @@
         </div> -->
       </mdc-layout-cell>
 
-      <mdc-layout-cell tablet=1 desktop=2 class="home__book-container__phone-hidden">
-        <!-- mdc-layout-cell 佔格子製造假 padding 讓中間能置中用 -->
-      </mdc-layout-cell>
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
     </mdc-layout-grid>
 
     <!-- footer -->
     <mdc-layout-grid class="home__footer-container">
-      <mdc-layout-cell tablet=1 desktop=2 class="home__footer-container__phone-hidden">
-        <!-- mdc-layout-cell 佔格子製造假 padding 讓中間能置中用 -->
-      </mdc-layout-cell>
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
 
       <mdc-layout-cell phone=4 tablet=6 desktop=8 class="home__footer-container__footer-component">
         <div class="home__footer-container__footer-component__container">
@@ -173,9 +164,7 @@
         </div>
       </mdc-layout-cell>
 
-      <mdc-layout-cell tablet=1 desktop=2 class="home__mdc-layout-grid__phone-hidden">
-        <!-- mdc-layout-cell 佔格子製造假 padding 讓中間能置中用 -->
-      </mdc-layout-cell>
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
     </mdc-layout-grid>
 
   </div>
@@ -221,7 +210,13 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.phone-hidden {
+  @media (max-width: 479px) {
+    display: none;
+  }
+}
+
 .home {
   // search-container
   &__search-container {
@@ -237,11 +232,6 @@ export default {
     >.mdc-layout-grid__inner {
       height: 100%;
     }
-    &__phone-hidden {
-      @media (max-width: 479px) {
-        display: none;
-      }
-    }
     &__search-component {
       display: flex;
       align-items: center;
@@ -255,11 +245,6 @@ export default {
   // book
   &__book-container {
     background-color: #1c1a0914;
-    &__phone-hidden {
-      @media (max-width: 479px) {
-        display: none;
-      }
-    }
     &__messages-component {
       >h2 {
         text-align: center;
@@ -285,11 +270,6 @@ export default {
   &__footer-container {
     color: white;
     background-color: var(--mdc-theme-primary, #212121);
-    &__phone-hidden {
-      @media (max-width: 479px) {
-        display: none;
-      }
-    }
     &__footer-component {
       display: flex;
       align-items: center;

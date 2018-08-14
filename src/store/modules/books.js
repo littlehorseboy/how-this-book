@@ -35,6 +35,7 @@ const getters = {
   getBooks() {
     return state.books;
   },
+  getBook: state => ISBN => state.books.find(book => book.ISBN === ISBN),
 };
 
 const actions = {
