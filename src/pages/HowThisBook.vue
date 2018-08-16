@@ -15,7 +15,7 @@
       </mdc-toolbar>
       <mdc-drawer slot="drawer" toggle-on="toggle-drawer">
         <mdc-drawer-list>
-            <router-link :to="{ name: 'Book' }" tag="mdc-drawer-item" start-icon="inbox">
+            <router-link :to="{ name: 'Home' }" tag="mdc-drawer-item" start-icon="inbox">
               <span class="mdc-list-item__graphic"><i aria-hidden="true" class="material-icons">inbox</i></span>
               支持者名單
             </router-link>

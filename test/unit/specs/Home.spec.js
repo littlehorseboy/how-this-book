@@ -25,20 +25,20 @@ describe('Home.vue', () => {
     testOptions = _.cloneDeep(books);
   });
 
-  const Constructor = Vue.extend({ ...Home,
-    store: new Vuex.Store({
-      modules: {
-        books,
-      },
-      strict: true,
-    }),
-  });
+  // const Constructor = Vue.extend({ ...Home,
+  //   store: new Vuex.Store({
+  //     modules: {
+  //       books,
+  //     },
+  //     strict: true,
+  //   }),
+  // });
 
-  const vm = new Constructor().$mount();
+  // const vm = new Constructor().$mount();
 
-  it('vm', () => {
-    expect(vm).to.equal('Welcome to Your Vue.js App');
-  });
+  // it('vm', () => {
+  //   expect(vm).to.equal('Welcome to Your Vue.js App');
+  // });
 
   it('done', (done) => {
     function assertions() {
