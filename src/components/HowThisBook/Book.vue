@@ -36,7 +36,7 @@
           </mdc-card-text>
           <mdc-card-actions>
             <mdc-card-action-icons>
-              <mdc-button raised>
+              <mdc-button raised @click="create_comment_div = true;">
                 <i class="material-icons mdc-button__icon">add</i>
                 評論
               </mdc-button>
@@ -47,6 +47,69 @@
 
       <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
     </mdc-layout-grid>
+
+    <!-- 新增評論 -->
+    <mdc-layout-grid v-if="create_comment_div">
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
+
+      <mdc-layout-cell phone=4 tablet=6 desktop=8>
+        <mdc-card>
+          <mdc-button raised @click="create_comment_div = false;">
+            <i class="material-icons mdc-button__icon">add</i>
+            收起
+          </mdc-button>
+          <mdc-card-text>
+            <!-- 新增表單 -->
+            <mdc-layout-grid>
+              <mdc-layout-cell phone=4 tablet=8 desktop=12>
+                <mdc-body>你要發表的是：</mdc-body>
+                <mdc-body>
+                  <mdc-button raised>讀書心得</mdc-button>
+                  <mdc-button raised>問答</mdc-button>
+                  <mdc-button raised>閒聊</mdc-button>
+                </mdc-body>
+
+                <mdc-body>優點： 目前還可以輸入 5000 字</mdc-body>
+                <mdc-body>
+                  <mdc-textfield v-model="advantage" fullwidth multiline rows="2" label="想想這本書最令你印象深刻的地方" />
+                </mdc-body>
+
+                <mdc-body>缺點： 目前還可以輸入 5000 字</mdc-body>
+                <mdc-body>
+                  <mdc-textfield v-model="advantage" fullwidth multiline rows="2" label="想想這本書讓你不知所云的地方" />
+                </mdc-body>
+
+                <mdc-body>整體而言，你覺得這本書：</mdc-body>
+                <mdc-body>
+                  <mdc-button raised>好</mdc-button>
+                  <mdc-button raised>普</mdc-button>
+                  <mdc-button raised>差</mdc-button>
+                </mdc-body>
+
+                <mdc-body>
+                  <mdc-switch v-model="checked">{{Label}}</mdc-switch>
+                </mdc-body>
+                <mdc-body>
+                  <mdc-button raised>送出</mdc-button>
+                </mdc-body>
+              </mdc-layout-cell>
+            </mdc-layout-grid>
+            <!-- end 新增表單 -->
+          </mdc-card-text>
+          <mdc-card-actions>
+            <mdc-card-action-icons>
+              <mdc-button raised @click="create_comment_div = true;">
+                <i class="material-icons mdc-button__icon">add</i>
+                評論
+              </mdc-button>
+            </mdc-card-action-icons>
+          </mdc-card-actions>
+        </mdc-card>
+      </mdc-layout-cell>
+
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
+    </mdc-layout-grid>
+    <!-- end 新增評論 -->
 
     <mdc-layout-grid>
       <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
@@ -107,6 +170,9 @@ export default {
   name: 'Home',
   data() {
     return {
+      create_comment_div: false,
+
+      advantage: '',
     };
   },
   computed: {
