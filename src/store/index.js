@@ -10,3 +10,7 @@ export default new Vuex.Store({
   },
   strict: true,
 });
+
+export {
+  books,
+};
