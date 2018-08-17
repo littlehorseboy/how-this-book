@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import HowThisBook from '@/pages/HowThisBook';
 import Home from '@/components/HowThisBook/Home';
+import Search from '@/components/HowThisBook/Search';
 import Book from '@/components/HowThisBook/Book';
 
 Vue.use(Router);
@@ -17,6 +18,11 @@ export default new Router({
           path: '/',
           component: Home,
           name: 'Home',
+        },
+        {
+          path: '/search?keyword=:keyword&category=:category',
+          component: Search,
+          name: 'Search',
         },
         {
           path: '/book/:ISBN',

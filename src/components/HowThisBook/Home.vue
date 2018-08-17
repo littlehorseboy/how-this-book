@@ -13,8 +13,10 @@
             <mdc-button raised @click="currentInput = 'author'">找作者</mdc-button>
           </div>
           <div>
-            <mdc-textfield v-if="currentInput === 'book'" v-model="searchBookName" label="找一本好書" box leading-icon="search" />
-            <mdc-textfield v-if="currentInput === 'author'" v-model="searchBookName" label="找一個作者" box leading-icon="search" />
+            <mdc-textfield v-if="currentInput === 'book'" v-model="searchBookName" label="找一本好書" box
+              leading-icon="search" @icon-action="gogo" />
+            <mdc-textfield v-if="currentInput === 'author'" v-model="searchBookName" label="找一個作者" box
+              leading-icon="search" @icon-action="gogo" />
           </div>
         </div>
       </mdc-layout-cell>
@@ -205,6 +207,9 @@ export default {
         'gossip',
       ];
       this.currentTab = tabsIndexArray[idx];
+    },
+    gogo() {
+      debugger;
     },
   },
 };
