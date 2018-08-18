@@ -182,15 +182,6 @@ export default {
       searchBookName: '', // 搜尋欄位值
       currentInput: 'book', // 目前搜尋的 Input
       currentTab: 'experience', // 目前分頁 (尚無使用)
-      comments: [ // comment 之後會放 vuex 裡吧
-        {
-          id: 1,
-          book_id: 1,
-          ISBN: '',
-          comment: '',
-          create_at: '建立時間',
-        },
-      ],
     };
   },
   computed: {
@@ -209,8 +200,11 @@ export default {
       this.currentTab = tabsIndexArray[idx];
     },
     gogo() {
-      debugger;
+      // debugger;
     },
+  },
+  created() {
+    this.$store.dispatch('getBooksInAxios');
   },
 };
 </script>

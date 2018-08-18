@@ -1,5 +1,5 @@
 <template>
-  <div class="book mdc-typography">
+  <div class="book mdc-typography" v-if="book">
     <mdc-layout-grid>
       <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
 
@@ -87,10 +87,7 @@
                 </mdc-body>
 
                 <mdc-body>
-                  <mdc-switch v-model="checked">{{Label}}</mdc-switch>
-                </mdc-body>
-                <mdc-body>
-                  <mdc-button raised>送出</mdc-button>
+                  <mdc-switch>匿名</mdc-switch>
                 </mdc-body>
               </mdc-layout-cell>
             </mdc-layout-grid>
@@ -100,7 +97,7 @@
             <mdc-card-action-icons>
               <mdc-button raised @click="create_comment_div = true;">
                 <i class="material-icons mdc-button__icon">add</i>
-                評論
+                送出
               </mdc-button>
             </mdc-card-action-icons>
           </mdc-card-actions>
@@ -173,6 +170,9 @@ export default {
       create_comment_div: false,
 
       advantage: '',
+      disadvantage: '',
+      evaluation: '',
+      anonymous: '',
     };
   },
   computed: {
@@ -185,6 +185,11 @@ export default {
   },
   methods: {
 
+  },
+  created() {
+    if (!this.$store.getters.getBook(this.$route.params.ISBN)) {
+      this.$store.dispatch('getBooksInAxios');
+    }
   },
 };
 </script>
