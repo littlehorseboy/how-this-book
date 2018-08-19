@@ -1,40 +1,13 @@
+import axios from 'axios';
+
 const types = {
-  UPDATE_STEP: 'step/UPDATE_STEP',
+  GET_COMMENTS_INAXIOS: 'comments/GET_COMMENTS_INAXIOS',
+
+  POST_COMMENT_INAXIOS: 'comments/POST_COMMENT_INAXIOS',
 };
 
 const state = {
-  comments: [
-    {
-      id: 1,
-      book_id: 1,
-      ISBN: '9789864766826',
-      name: '匿名',
-      comment: `評論在此
-      評論在此
-      評論在此`,
-      create_at: '建立時間',
-    },
-    {
-      id: 2,
-      book_id: 1,
-      ISBN: '9789864766826',
-      name: '匿名',
-      comment: `評論在此
-      評論在此
-      評論在此`,
-      create_at: '建立時間',
-    },
-    {
-      id: 3,
-      book_id: 2,
-      ISBN: '9789863796725',
-      name: '匿名',
-      comment: `評論在此
-      評論在此
-      評論在此`,
-      create_at: '建立時間',
-    },
-  ],
+  comments: [],
 };
 
 const getters = {
@@ -42,23 +15,68 @@ const getters = {
 };
 
 const actions = {
-  updateStep({ commit }, step) {
+  getCommentsInAxios({ commit }) {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3000/comments',
+    })
+      .then((response) => {
+        commit(types.GET_COMMENTS_INAXIOS, response.data);
+      })
+      .catch((error) => {
+        commit(types.GET_COMMENTS_INAXIOS, JSON.parse(`[
+          {
+            "id": 1,
+            "book_id": 1,
+            "ISBN": "9789864766826",
+            "name": "匿名",
+            "advantage": "aaa",
+            "disadvantage": "bbb",
+            "evaluation": null,
+            "anonymous": "匿名",
+            "create_at": "建立時間"
+          },
+          {
+            "id": 2,
+            "book_id": 1,
+            "ISBN": "9789864766826",
+            "name": "匿名",
+            "advantage": "ccc",
+            "disadvantage": "ddd",
+            "evaluation": null,
+            "anonymous": "匿名",
+            "create_at": "建立時間"
+          }
+        ]`));
+        throw error;
+      });
+  },
+  postCommentInAxios({ commit }, comment) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (step) {
-          commit(types.UPDATE_STEP, step);
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/comments',
+        data: comment,
+      })
+        .then((response) => {
+          commit(types.POST_COMMENT_INAXIOS, response.data);
           resolve();
-        } else {
-          reject();
-        }
-      }, 0);
+        })
+        .catch((error) => {
+          commit(types.POST_COMMENT_INAXIOS, comment);
+          reject(error);
+          // throw error;
+        });
     });
   },
 };
 
 const mutations = {
-  [types.UPDATE_STEP](state, step) {
-    state.step = step;
+  [types.GET_COMMENTS_INAXIOS](state, comments) {
+    state.comments = comments;
+  },
+  [types.POST_COMMENT_INAXIOS](state, comment) {
+    state.comments.push(comment);
   },
 };
 

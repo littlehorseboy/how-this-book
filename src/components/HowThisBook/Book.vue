@@ -65,8 +65,8 @@
                 <mdc-body>你要發表的是：</mdc-body>
                 <mdc-body>
                   <mdc-button raised>讀書心得</mdc-button>
-                  <mdc-button raised>問答</mdc-button>
-                  <mdc-button raised>閒聊</mdc-button>
+                  <!-- <mdc-button raised>問答</mdc-button>
+                  <mdc-button raised>閒聊</mdc-button> -->
                 </mdc-body>
 
                 <mdc-body>優點： 目前還可以輸入 5000 字</mdc-body>
@@ -76,14 +76,14 @@
 
                 <mdc-body>缺點： 目前還可以輸入 5000 字</mdc-body>
                 <mdc-body>
-                  <mdc-textfield v-model="advantage" fullwidth multiline rows="2" label="想想這本書讓你不知所云的地方" />
+                  <mdc-textfield v-model="disadvantage" fullwidth multiline rows="2" label="想想這本書讓你不知所云的地方" />
                 </mdc-body>
 
                 <mdc-body>整體而言，你覺得這本書：</mdc-body>
                 <mdc-body>
-                  <mdc-button raised>好</mdc-button>
-                  <mdc-button raised>普</mdc-button>
-                  <mdc-button raised>差</mdc-button>
+                  <mdc-radio v-model="evaluation" name="radios" label="好"  />
+                  <mdc-radio v-model="evaluation" name="radios" label="普" />
+                  <mdc-radio v-model="evaluation" name="radios" label="差" />
                 </mdc-body>
 
                 <mdc-body>
@@ -95,7 +95,7 @@
           </mdc-card-text>
           <mdc-card-actions>
             <mdc-card-action-icons>
-              <mdc-button raised @click="create_comment_div = true;">
+              <mdc-button raised @click="commentValidateBeforeSubmit">
                 <i class="material-icons mdc-button__icon">add</i>
                 送出
               </mdc-button>
@@ -121,7 +121,7 @@
                 <mdc-layout-cell phone=4 tablet=1 desktop=3 class="book__comment-container__card__people">
                   <img :src="`https://source.unsplash.com/80x80/?face&sig=${index}`">
                   <div>
-                    <mdc-body typo="body2">{{ comment.name }}</mdc-body>
+                    <mdc-body typo="body2">{{ comment.anonymous === '匿名' ? '匿名' : comment.name }}</mdc-body>
                     <mdc-body typo="body2">2周前</mdc-body>
                   </div>
                 </mdc-layout-cell>
@@ -129,12 +129,15 @@
                   <mdc-body>{{ book.bookName }}</mdc-body>
                 </mdc-layout-cell>
                 <mdc-layout-cell phone=4 tablet=1 desktop=2>
-                  <mdc-icon icon="star_border"></mdc-icon>
+                  <mdc-body>{{ comment.evaluation }}</mdc-body>
                 </mdc-layout-cell>
 
                 <!-- end tablet=8 desktop=12 -->
                 <mdc-layout-cell phone=4 tablet=8 desktop=12>
-                  <mdc-body v-html="comment.comment.replace(/\n/g, '<br>')"></mdc-body>
+                  <mdc-body>優點：</mdc-body>
+                  <mdc-body v-html="comment.advantage.replace(/\n/g, '<br>')"></mdc-body>
+                  <mdc-body>缺點：</mdc-body>
+                  <mdc-body v-html="comment.disadvantage.replace(/\n/g, '<br>')"></mdc-body>
                   <mdc-body typo="body2">來自: 127.0.0.1</mdc-body>
                 </mdc-layout-cell>
 
@@ -163,6 +166,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: 'Home',
   data() {
@@ -171,7 +176,7 @@ export default {
 
       advantage: '',
       disadvantage: '',
-      evaluation: '',
+      evaluation: null,
       anonymous: '',
     };
   },
@@ -184,11 +189,53 @@ export default {
     },
   },
   methods: {
+    commentValidateBeforeSubmit() {
+      // if (true) {
+      this.postCommentInAxios();
+      // }
+    },
+    postCommentInAxios() {
+      const self = this;
 
+      const comment = {
+        book_id: this.book.book_id,
+        ISBN: this.book.ISBN,
+        name: '匿名',
+        advantage: this.advantage,
+        disadvantage: this.disadvantage,
+        evaluation: this.evaluation,
+        anonymous: this.evaluation,
+        create_at: moment().format('YYYY/MM/DD, hh:mm:ss'),
+      };
+
+      this.$store.dispatch('postCommentInAxios', comment)
+        .then(() => {
+          // self.create_comment_div = false;
+
+          // self.advantage = '';
+          // self.disadvantage = '';
+          // self.evaluation = null;
+          // self.anonymous = '';
+        })
+        .catch((e) => {
+          throw e;
+        })
+        .finally(() => {
+          self.create_comment_div = false;
+
+          self.advantage = '';
+          self.disadvantage = '';
+          self.evaluation = null;
+          self.anonymous = '';
+        });
+    },
   },
   created() {
     if (!this.$store.getters.getBook(this.$route.params.ISBN)) {
       this.$store.dispatch('getBooksInAxios');
+    }
+    if (this.$store.getters.getComments(this.$route.params.ISBN).length === 0) {
+      this.$store.dispatch('getCommentsInAxios');
     }
   },
 };

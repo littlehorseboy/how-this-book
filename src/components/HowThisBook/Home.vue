@@ -205,6 +205,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getBooksInAxios');
+    this.$store.dispatch('getCommentsInAxios');
   },
 };
 </script>

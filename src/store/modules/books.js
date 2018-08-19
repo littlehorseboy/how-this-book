@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const types = {
-  GET_BOOKS_INAXIOS: 'books/GETBOOKS_INAXIOS',
+  GET_BOOKS_INAXIOS: 'books/GET_BOOKS_INAXIOS',
 };
 
 const state = {
