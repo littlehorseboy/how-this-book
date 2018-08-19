@@ -1,5 +1,5 @@
 
-GET => /books (回傳所有書籍)
+- GET => /books (回傳所有書籍)
 ```javascript
 [
     {
@@ -29,7 +29,7 @@ GET => /books (回傳所有書籍)
 ]
 ```
 
-GET => /comments (回傳所有評論)
+- GET => /comments (回傳所有評論)
 ```javascript
 [
     {
@@ -57,7 +57,7 @@ GET => /comments (回傳所有評論)
 ]
 ```
 
-POST => /comment (新增評論)
+- POST => /comment (新增評論)
 ```javascript
 // 參數 Body raw JSON (application/json)
 {
@@ -72,4 +72,4 @@ POST => /comment (新增評論)
 }
 ```
 
-DELETE => /products/4 (刪除 id 為 4 的評論)
+- DELETE => /products/4 (刪除 id 為 4 的評論)
