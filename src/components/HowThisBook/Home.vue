@@ -13,10 +13,10 @@
             <mdc-button raised @click="currentInput = 'author'">找作者</mdc-button>
           </div>
           <div>
-            <mdc-textfield v-if="currentInput === 'book'" v-model="searchBookName" label="找一本好書" box
-              leading-icon="search" @icon-action="gogo" />
-            <mdc-textfield v-if="currentInput === 'author'" v-model="searchBookName" label="找一個作者" box
-              leading-icon="search" @icon-action="gogo" />
+            <mdc-textfield v-if="currentInput === 'book'" v-model="searchKeyword" label="找一本好書" box
+              leading-icon="search" @icon-action="searchKeywordMethod" />
+            <mdc-textfield v-if="currentInput === 'author'" v-model="searchKeyword" label="找一個作者" box
+              leading-icon="search" @icon-action="searchKeywordMethod" />
           </div>
         </div>
       </mdc-layout-cell>
@@ -76,7 +76,6 @@
               </mdc-card-primary-action>
             </mdc-card>
           </router-link>
-          <!-- </div> -->
           <!-- end v-for books -->
         </div>
 
@@ -153,8 +152,8 @@
             <mdc-button raised @click="currentInput = 'author'">找作者</mdc-button>
           </div>
           <div>
-            <mdc-textfield v-if="currentInput === 'book'" v-model="searchBookName" label="找一本好書" box leading-icon="search" />
-            <mdc-textfield v-if="currentInput === 'author'" v-model="searchBookName" label="找一個作者" box leading-icon="search" />
+            <mdc-textfield v-if="currentInput === 'book'" v-model="searchKeyword" label="找一本好書" box leading-icon="search" />
+            <mdc-textfield v-if="currentInput === 'author'" v-model="searchKeyword" label="找一個作者" box leading-icon="search" />
           </div>
           <mdc-body>
             <mdc-button raised>關於我們</mdc-button>
@@ -179,7 +178,7 @@ export default {
   name: 'Home',
   data() {
     return {
-      searchBookName: '', // 搜尋欄位值
+      searchKeyword: '', // 搜尋欄位值
       currentInput: 'book', // 目前搜尋的 Input
       currentTab: 'experience', // 目前分頁 (尚無使用)
     };
@@ -199,8 +198,8 @@ export default {
       ];
       this.currentTab = tabsIndexArray[idx];
     },
-    gogo() {
-      // debugger;
+    searchKeywordMethod() {
+      this.$router.push({ name: 'Search', params: { keyword: 123, category: 567 } });
     },
   },
   created() {
