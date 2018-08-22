@@ -20,7 +20,7 @@ export default new Router({
           name: 'Home',
         },
         {
-          path: '/search?keyword=:keyword&category=:category',
+          path: '/search',
           component: Search,
           name: 'Search',
         },

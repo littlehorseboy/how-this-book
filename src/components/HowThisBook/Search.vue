@@ -1,14 +1,37 @@
 <template>
   <div class="search mdc-typography">
-    <mdc-layout-grid class="home__book-container">
+    <mdc-layout-grid class="search__search-container">
       <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
 
-      <mdc-layout-cell phone=4 tablet=6 desktop=8 class="home__book-container__messages-component">
+      <mdc-layout-cell phone=4 tablet=6 desktop=8 class="search__search-container__search-component">
+        <div class="search__search-container__search-component__container">
+          <mdc-display>好書客</mdc-display>
+          <mdc-headline>好書客，一個分享讀書心得的平台。</mdc-headline>
+          <div>
+            <mdc-button raised @click="currentInput = 'book'">找好書</mdc-button>
+            <mdc-button raised @click="currentInput = 'author'">找作者</mdc-button>
+          </div>
+          <div>
+            <mdc-textfield v-if="currentInput === 'book'" v-model="searchKeyword" label="找一本好書" box
+              leading-icon="search" @icon-action="searchKeywordMethod" />
+            <mdc-textfield v-if="currentInput === 'author'" v-model="searchKeyword" label="找一個作者" box
+              leading-icon="search" @icon-action="searchKeywordMethod" />
+          </div>
+        </div>
+      </mdc-layout-cell>
+
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
+    </mdc-layout-grid>
+
+    <mdc-layout-grid class="search__book-container">
+      <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
+
+      <mdc-layout-cell phone=4 tablet=6 desktop=8 class="search__book-container__messages-component">
         <mdc-headline>熱門書籍</mdc-headline>
         <div v-show="currentTab === 'experience'">
           <!-- v-for books -->
           <router-link :to="{ name: 'Book', params: { ISBN: book.ISBN }}" tag="div" v-for="book in books" :key="book.id">
-            <mdc-card class="home__book-container__messages-component__card">
+            <mdc-card class="search__book-container__messages-component__card">
               <mdc-card-primary-action>
                 <mdc-card-text>
                   <!-- 書籍內容 -->
@@ -39,13 +62,13 @@
                   <!-- end 書籍內容 -->
                 </mdc-card-text>
                 <mdc-card-actions>
-                  <mdc-card-action-icons class="home__book-container__messages-component__card__action-icons">
+                  <mdc-card-action-icons class="search__book-container__messages-component__card__action-icons">
                     <mdc-card-action-icon icon="thumb_up" />
                   </mdc-card-action-icons>
-                  <mdc-card-action-icons class="home__book-container__messages-component__card__action-icons">
+                  <mdc-card-action-icons class="search__book-container__messages-component__card__action-icons">
                     <mdc-card-action-icon icon="thumb_down" />
                   </mdc-card-action-icons>
-                  <mdc-card-action-icons class="home__book-container__messages-component__card__action-icons">
+                  <mdc-card-action-icons class="search__book-container__messages-component__card__action-icons">
                     <mdc-card-action-icon icon="comment" />
                   </mdc-card-action-icons>
                 </mdc-card-actions>
@@ -68,6 +91,7 @@ export default {
   name: 'Search',
   data() {
     return {
+      searchKeyword: '', // 搜尋欄位值
       currentInput: 'book', // 目前搜尋的 Input
       currentTab: 'experience', // 目前分頁 (尚無使用)
     };
@@ -78,29 +102,52 @@ export default {
     }),
   },
   methods: {
-
+    searchKeywordMethod() {
+      this.$router.push({ name: 'Search', query: { keyword: this.searchKeyword, category: this.currentInput } });
+    },
+  },
+  created() {
+    if (!this.$store.getters.getBook(this.$route.params.ISBN)) {
+      this.$store.dispatch('getBooksInAxios');
+    }
   },
 };
 </script>
 
 <style lang="scss">
 .search {
-  &__comment-container {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    &__card {
-      &:hover {
-        -webkit-box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);
-        box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);
+  // search-container
+  &__search-container {
+    &__search-component {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &__container {
+        text-align: center;
+        color: white;
       }
-      &__people {
-        display: flex;
-        >img {
-          width: 80px;
-          height: 80px;
+    }
+  }
+  // book
+  &__book-container {
+    background-color: #1c1a0914;
+    &__messages-component {
+      >h2 {
+        text-align: center;
+      }
+      &__tabs {
+        margin-bottom: 1rem;
+      }
+      &__card {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        transition: box-shadow 0.5s;
+        &:hover {
+          -webkit-box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);
+          box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);
         }
-        >img + div {
-          margin-left: 0.5rem;
+        &__action-icons {
+          justify-content: center;
         }
       }
     }

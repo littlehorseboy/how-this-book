@@ -199,7 +199,7 @@ export default {
       this.currentTab = tabsIndexArray[idx];
     },
     searchKeywordMethod() {
-      this.$router.push({ name: 'Search', params: { keyword: 123, category: 567 } });
+      this.$router.push({ name: 'Search', query: { keyword: this.searchKeyword, category: this.currentInput } });
     },
   },
   created() {
