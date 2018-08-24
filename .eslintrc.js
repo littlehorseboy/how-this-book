@@ -49,5 +49,7 @@ module.exports = {
     'linebreak-style': 0,
     // Vuex state
     'no-shadow': ['error', { 'allow': ['state'] }],
+    // default 100
+    'max-len': ["error", { "code": 150 }],
   }
 }

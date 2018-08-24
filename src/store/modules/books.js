@@ -13,6 +13,7 @@ const getters = {
     return state.books;
   },
   getBook: state => ISBN => state.books.find(book => book.ISBN === ISBN),
+  getKeywordBooks: state => keyword => state.books.filter(book => book.bookName.indexOf(keyword) !== -1),
 };
 
 const actions = {

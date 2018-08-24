@@ -85,8 +85,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   name: 'Search',
   data() {
@@ -97,9 +95,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      books: 'getBooks',
-    }),
+    books() {
+      return this.$store.getters.getKeywordBooks(this.$route.query.keyword);
+    },
   },
   methods: {
     searchKeywordMethod() {
