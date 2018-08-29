@@ -14,9 +14,9 @@
           </div>
           <div>
             <mdc-textfield v-if="currentInput === 'book'" v-model="searchKeyword" label="找一本好書" box
-              leading-icon="search" @icon-action="searchKeywordMethod" />
+              leading-icon="search" @icon-action="searchKeywordMethod" @keypress.enter="searchKeywordMethod" />
             <mdc-textfield v-if="currentInput === 'author'" v-model="searchKeyword" label="找一個作者" box
-              leading-icon="search" @icon-action="searchKeywordMethod" />
+              leading-icon="search" @icon-action="searchKeywordMethod" @keypress.enter="searchKeywordMethod" />
           </div>
         </div>
       </mdc-layout-cell>
@@ -243,7 +243,6 @@ export default {
   }
   // book
   &__book-container {
-    background-color: #1c1a0914;
     &__messages-component {
       >h2 {
         text-align: center;

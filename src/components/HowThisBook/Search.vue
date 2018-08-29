@@ -5,17 +5,15 @@
 
       <mdc-layout-cell phone=4 tablet=6 desktop=8 class="search__search-container__search-component">
         <div class="search__search-container__search-component__container">
-          <mdc-display>好書客</mdc-display>
-          <mdc-headline>好書客，一個分享讀書心得的平台。</mdc-headline>
           <div>
             <mdc-button raised @click="currentInput = 'book'">找好書</mdc-button>
             <mdc-button raised @click="currentInput = 'author'">找作者</mdc-button>
           </div>
           <div>
             <mdc-textfield v-if="currentInput === 'book'" v-model="searchKeyword" label="找一本好書" box
-              leading-icon="search" @icon-action="searchKeywordMethod" />
+              leading-icon="search" @icon-action="searchKeywordMethod" @keypress.enter="searchKeywordMethod" />
             <mdc-textfield v-if="currentInput === 'author'" v-model="searchKeyword" label="找一個作者" box
-              leading-icon="search" @icon-action="searchKeywordMethod" />
+              leading-icon="search" @icon-action="searchKeywordMethod" @keypress.enter="searchKeywordMethod" />
           </div>
         </div>
       </mdc-layout-cell>
@@ -27,7 +25,7 @@
       <mdc-layout-cell tablet=1 desktop=2></mdc-layout-cell>
 
       <mdc-layout-cell phone=4 tablet=6 desktop=8 class="search__book-container__messages-component">
-        <mdc-headline>熱門書籍</mdc-headline>
+        <mdc-headline>搜尋結果</mdc-headline>
         <div v-show="currentTab === 'experience'">
           <!-- v-for books -->
           <router-link :to="{ name: 'Book', params: { ISBN: book.ISBN }}" tag="div" v-for="book in books" :key="book.id">
@@ -122,13 +120,11 @@ export default {
       justify-content: center;
       &__container {
         text-align: center;
-        color: white;
       }
     }
   }
   // book
   &__book-container {
-    background-color: #1c1a0914;
     &__messages-component {
       >h2 {
         text-align: center;

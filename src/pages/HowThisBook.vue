@@ -27,7 +27,7 @@
         </mdc-drawer-list>
       </mdc-drawer>
 
-      <main class="content">
+      <main>
         <router-view/>
       </main>
 
@@ -50,6 +50,7 @@ export default {
 <style lang="scss" scoped>
 .HowThisBook {
   main {
+    background-color: #1c1a0914;
     min-height: 100%;
   }
 }
