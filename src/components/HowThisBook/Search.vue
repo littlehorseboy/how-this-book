@@ -106,6 +106,8 @@ export default {
     if (!this.$store.getters.getBook(this.$route.params.ISBN)) {
       this.$store.dispatch('getBooksInAxios');
     }
+
+    this.searchKeyword = this.$route.query.keyword;
   },
 };
 </script>
